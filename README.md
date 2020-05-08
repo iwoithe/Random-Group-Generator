@@ -2,7 +2,7 @@
 
 An application that generates random groups.
 
-![](screenshots\demo.png)
+![](screenshots\demo.png) -> Make sure update screenshots
 
 ## Features
 

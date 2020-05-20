@@ -57,19 +57,17 @@ class RandomGroupGenerator(QMainWindow):
         # Menu Bar
         menu_bar = QMenuBar()
         # File
-        action_file = menu_bar.addMenu("File")
+        action_file = menu_bar.addMenu("&File")
         action_file.addAction("New", self.new_file, QKeySequence.New)
         action_file.addAction("Open", self.open_files, QKeySequence.Open)
         action_file.addAction("Save", self.save_file, QKeySequence.Save)
         action_file.addSeparator()
         action_file.addAction("Quit", self.quit, QKeySequence.Quit)
         # Edit
-        action_edit = menu_bar.addMenu("Edit")
+        action_edit = menu_bar.addMenu("&Edit")
         action_edit.addAction("Preferences")
-        # View
-        action_view = menu_bar.addMenu("View")
         # Help
-        action_help = menu_bar.addMenu("Help")
+        action_help = menu_bar.addMenu("&Help")
         action_help.addAction("Manual")
         action_help.addSeparator()
         action_help.addAction("About")

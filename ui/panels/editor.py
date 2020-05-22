@@ -101,6 +101,8 @@ class Editor(QDockWidget):
             file_tab.setLayout(layout)
             self.tabs.addTab(file_tab, os.path.basename(file))
 
+            self.tabs.setCurrentWidget(file_tab)
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     editor = Editor()

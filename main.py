@@ -43,7 +43,7 @@ import core.generator as generator
 #       (*) next to the filename
 # TODO: When closing, if a file has been modified, ask if you
 #       want to save the files
-# TODO: Add toggle features to toggle the views of some panes.
+# TODO: Add toggle features to toggle the views of some docks/panes.
 #       Add toggle feature menu inside the view
 # TODO: Use panes (like Atoms) instead of using QDockWidget
 
@@ -132,6 +132,7 @@ class RandomGroupGenerator(QMainWindow):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
+    # Temporarily set the style, until I've written my own styles
     if sys.platform == 'win32':
         app.setStyle("fusion")
     rgg = RandomGroupGenerator()

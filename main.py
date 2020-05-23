@@ -69,11 +69,9 @@ class RandomGroupGenerator(QMainWindow):
         action_file.addAction("Quit", self.quit, QKeySequence.Quit)
         # Edit
         action_edit = menu_bar.addMenu("&Edit")
-        action_edit.addAction("Preferences")
+        action_edit.addAction("Preferences (Coming in Version 0.3.2)")
         # Help
         action_help = menu_bar.addMenu("&Help")
-        action_help.addAction("Manual")
-        action_help.addSeparator()
         action_help.addAction("About", self.show_about)
         action_help.addAction("About Qt", QApplication.instance().aboutQt)
 

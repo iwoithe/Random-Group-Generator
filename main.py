@@ -25,10 +25,12 @@
 import os
 import sys
 
+import ui.about.about as about
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QKeySequence
+from PyQt5.QtGui import QKeySequence, QIcon
 from PyQt5.QtWidgets import (QApplication, QMainWindow, QWidget,
                              QHBoxLayout, QMenuBar, QFileDialog,
                              QStyle)
@@ -36,6 +38,8 @@ from PyQt5.QtWidgets import (QApplication, QMainWindow, QWidget,
 from ui.panels.editor import Editor
 from ui.panels.groups import Groups
 from ui.panels.options import Options
+
+from ui.about.about import AboutDialog
 
 import core.generator as generator
 
@@ -70,7 +74,7 @@ class RandomGroupGenerator(QMainWindow):
         action_help = menu_bar.addMenu("&Help")
         action_help.addAction("Manual")
         action_help.addSeparator()
-        action_help.addAction("About")
+        action_help.addAction("About", self.show_about)
         action_help.addAction("About Qt", QApplication.instance().aboutQt)
 
         # Editor
@@ -88,15 +92,16 @@ class RandomGroupGenerator(QMainWindow):
 
         self.setWindowTitle("Random Group Generator")
         self.setMenuBar(menu_bar)
+        self.setWindowIcon(QIcon("icon.png"))
 
     def new_file(self):
         self.editor.new_file()
 
     def save_file(self):
         open_files_path = ''
-        # Options for the open dialog
+
+        # Options for the save dialog
         options = QFileDialog.Options()
-        options |= QFileDialog.DontUseNativeDialog
 
         # The variable _ is not used, hence its name
         file_name, _ = QFileDialog.getSaveFileName(self,
@@ -114,9 +119,9 @@ class RandomGroupGenerator(QMainWindow):
 
     def open_files(self):
         open_files_path = ''
+
         # Options for the open dialog
         options = QFileDialog.Options()
-        options |= QFileDialog.DontUseNativeDialog
 
         # The variable _ is not used, hence its name
         files, _ = QFileDialog.getOpenFileNames(self,
@@ -126,6 +131,10 @@ class RandomGroupGenerator(QMainWindow):
         if files:
             self.openFilesPath = files[0]
             self.editor.load_files(files)
+
+    def show_about(self):
+        about_dialog = AboutDialog()
+        about_dialog.exec_()
 
     def quit(self):
         self.destroy()

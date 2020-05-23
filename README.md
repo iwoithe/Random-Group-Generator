@@ -63,6 +63,7 @@ For support, please open an issue on GitLab.
 - [x] Change the GUI framework used to PyQt5
 - [x] Make Random Group Generator more customizable (using QDockWidget)
 - [ ] Create the CSS style sheets
+- [ ] Add preferences
 - [ ] Add the ability to import and export files
 - [ ] Create a better icon
 - [ ] Create binaries for Linux, MacOS and Windows

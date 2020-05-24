@@ -22,7 +22,13 @@ At this time, Random Group Generator is a source only distribution.
 
 3. Open a shell (on Windows the Command Prompt or PowerShell) in the top level directory of the extracted Random Group Generator source tree.
 
-4. Run the following command:
+4. On Linux and MacOS, run the following command:
+   
+   ```bash
+   pip3 install -r requirements.txt
+   ```
+   
+   On Windows, run the following command:
    
    ```bash
    pip install -r requirements.txt

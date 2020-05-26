@@ -140,8 +140,7 @@ class RandomGroupGenerator(QMainWindow):
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     # Temporarily set the style, until I've written my own styles
-    if sys.platform == 'win32':
-        app.setStyle("fusion")
+    app.setStyle("fusion")
     rgg = RandomGroupGenerator()
     rgg.show()
     sys.exit(app.exec_())

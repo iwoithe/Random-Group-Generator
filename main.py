@@ -55,6 +55,11 @@ class RandomGroupGenerator(QMainWindow):
     def __init__(self):
         super().__init__()
 
+        self.save_file_path = ''
+        self.open_files_path = ''
+        self.import_files_path = ''
+        self.export_files_path = ''
+
         self.setup_ui()
 
     def setup_ui(self):
@@ -99,24 +104,23 @@ class RandomGroupGenerator(QMainWindow):
         self.editor.new_file()
 
     def save_file(self):
-        open_files_path = ''
-
         # Options for the save dialog
         options = QFileDialog.Options()
 
         # The variable _ is not used, hence its name
-        file_name, _ = QFileDialog.getSaveFileName(self,
+        file, _ = QFileDialog.getSaveFileName(self,
                 "Save File",
-                "",
+                self.save_file_path,
                 "Random Group Generator (*.rgg)", options=options)
 
-        if file_name:
-            if ('.rgg' in file_name):
+        if file:
+            if ('.rgg' in file):
                 pass
             else:
-                file_name += ".rgg"
+                file += ".rgg"
 
-            self.editor.save_file(file_name)
+            self.save_files_path = file
+            self.editor.save_file(file)
 
     def open_files(self):
         open_files_path = ''
@@ -130,17 +134,15 @@ class RandomGroupGenerator(QMainWindow):
                 "Random Group Generator Files (*.rgg)", options=options)
 
         if files:
-            self.openFilesPath = files[0]
+            self.open_files_path = files[0]
             self.editor.load_files(files)
 
     def import_file(self):
-        import_files_path = ''
-
         # Options for the open dialog
         options = QFileDialog.Options()
 
         files, type = QFileDialog.getOpenFileNames(self,
-                "Import File/s", import_files_path,
+                "Import File/s", self.import_files_path,
                 "Comma Seperated Values (*.csv);;Microsoft Excel Spreadsheets (*.xlsx)",
                 options=options)
 
@@ -149,13 +151,11 @@ class RandomGroupGenerator(QMainWindow):
             self.editor.import_files(files, type)
 
     def export_file(self):
-        export_files_path = ''
-
         # Options for the open dialog
         options = QFileDialog.Options()
 
         file, file_type = QFileDialog.getSaveFileName(self,
-                "Export Groups", export_files_path,
+                "Export Groups", self.export_files_path,
                 "Comma Seperated Values (*.csv);;Microsoft Excel Spreadsheets (*.xlsx)",
                 options=options)
 

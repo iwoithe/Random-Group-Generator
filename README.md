@@ -23,13 +23,13 @@ At this time, Random Group Generator is a source only distribution.
 3. Open a shell (on Windows the Command Prompt or PowerShell) in the top level directory of the extracted Random Group Generator source tree.
 
 4. On Linux and MacOS, run the following command:
-   
+
    ```bash
    pip3 install -r requirements.txt
    ```
-   
+
    On Windows, run the following command:
-   
+
    ```bash
    pip install -r requirements.txt
    ```
@@ -41,13 +41,13 @@ To run Random Group Generator:
 1. Open a shell in the top level directory of Random Group Generator.
 
 2. On Linux and MacOS, run the following command:
-   
+
    ```bash
    python3 -i main.py
    ```
-   
+
    On Windows, run the following command:
-   
+
    ```bash
    python -i main.py
    ```
@@ -68,9 +68,9 @@ For support, please open an issue on GitLab.
 
 - [x] Change the GUI framework used to PyQt5
 - [x] Make Random Group Generator more customizable (using QDockWidget)
+- [x] Add the ability to import and export files
 - [ ] Create the CSS style sheets
 - [ ] Add preferences
-- [ ] Add the ability to import and export files
 - [ ] Create a better icon
 - [ ] Create binaries for Linux, MacOS and Windows
 

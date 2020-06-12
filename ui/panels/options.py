@@ -41,6 +41,8 @@ class Options(QDockWidget):
 
         self.generate_option = 'num_groups'
 
+        self.groups_list = [[1, ['']]]
+
         self.setup_ui()
 
     def setup_ui(self):
@@ -115,6 +117,8 @@ class Options(QDockWidget):
             groups = self.generator.generate_groups(names, people_per_group=self.spin_people_per_group.value())
         else:
             groups = [[1, ['']]]
+
+        self.groups_list = groups
 
         self.groups.table_groups.setRowCount(len(groups))
 

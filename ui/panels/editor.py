@@ -23,7 +23,11 @@
 #
 
 import os
+import csv
 import sys
+import openpyxl
+
+from openpyxl.styles.fonts import Font
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
@@ -66,15 +70,33 @@ class Editor(QDockWidget):
     def close_tab(self, i):
         self.tabs.removeTab(i)
 
-    def new_file(self):
-        file_tab = QWidget()
-        layout = QHBoxLayout()
+    def new_file(self, names=None):
+        if (names == None):
+            file_tab = QWidget()
+            layout = QHBoxLayout()
 
-        file_tab.editor = QPlainTextEdit()
+            file_tab.editor = QPlainTextEdit()
 
-        layout.addWidget(file_tab.editor)
-        file_tab.setLayout(layout)
-        self.tabs.addTab(file_tab, "untitled.rgg")
+            layout.addWidget(file_tab.editor)
+            file_tab.setLayout(layout)
+            self.tabs.addTab(file_tab, "untitled.rgg")
+
+            self.tabs.setCurrentWidget(file_tab)
+
+        else:
+            file_tab = QWidget()
+            layout = QHBoxLayout()
+
+            file_tab.editor = QPlainTextEdit()
+
+            for name in names:
+                file_tab.editor.insertPlainText(name)
+
+            layout.addWidget(file_tab.editor)
+            file_tab.setLayout(layout)
+            self.tabs.addTab(file_tab, "imported*")
+
+            self.tabs.setCurrentWidget(file_tab)
 
     def save_file(self, file):
         current_file = self.tabs.currentWidget()
@@ -102,6 +124,79 @@ class Editor(QDockWidget):
             self.tabs.addTab(file_tab, os.path.basename(file))
 
             self.tabs.setCurrentWidget(file_tab)
+
+    def import_files(self, files, file_type):
+        names = []
+        for file in files:
+            if file_type == "Comma Seperated Values (*.csv)":
+                with open(file) as f:
+                    reader = csv.reader(f, delimiter=",")
+                    for row in reader:
+                        name = row[0] + "\n"
+                        names.append(name)
+
+                self.new_file(names)
+
+            elif file_type == "Microsoft Excel Spreadsheets (*.xlsx)":
+                wb = openpyxl.load_workbook(file)
+                for sheet_name in wb.sheetnames:
+                    sheet = wb[sheet_name]
+                    num_names = sheet.max_row
+                    for row in range(1, num_names + 1):
+                        name = sheet.cell(row, 1).value + "\n"
+                        names.append(name)
+
+                    self.new_file(names)
+                    names = []
+
+            else:
+                pass
+
+    def export_file(self, groups, file, file_type):
+        if file_type == "Comma Seperated Values (*.csv)":
+            with open(file, 'w', newline='') as f:
+                writer = csv.writer(f, delimiter=',')
+                for group in groups:
+                    people = ""
+                    for person in group[1]:
+                        people += person + ", "
+
+                    row = str(group[0]) + ", " + people
+                    row = row.split(",")
+                    writer.writerow(row)
+
+        elif file_type == "Microsoft Excel Spreadsheets (*.xlsx)":
+            # Setup the workbook and sheet
+            wb = openpyxl.Workbook()
+            sheet = wb['Sheet']
+            sheet.title = "Generated Groups"
+            # Setup the header
+            # TODO: Centre the headers
+            header_font = Font(bold=True)
+
+            people_per_group = len(groups[0][1]) + 1
+            sheet.cell(1, 1).font = header_font
+            sheet.cell(1, 1).value = "#"
+            sheet.merge_cells(start_row=1, start_column=2, end_row=1, end_column=people_per_group)
+            sheet.cell(1, 2).font = header_font
+            sheet.cell(1, 2).value = "Groups"
+            # Put the data in the cells below the header
+            for group in groups:
+                people = ""
+                for person in group[1]:
+                    people += person + ", "
+
+                row = str(group[0]) + ", " + people
+                row = row.split(",")
+                row[0] = int(row[0])
+                for column in row:
+                    sheet.cell(group[0] + 1, row.index(column) + 1).value = column
+
+            wb.save(file)
+
+        else:
+            pass
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

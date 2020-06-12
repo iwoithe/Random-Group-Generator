@@ -66,6 +66,9 @@ class RandomGroupGenerator(QMainWindow):
         action_file.addAction("Open", self.open_files, QKeySequence.Open)
         action_file.addAction("Save", self.save_file, QKeySequence.Save)
         action_file.addSeparator()
+        action_file.addAction("Import", self.import_file)
+        action_file.addAction("Export", self.export_file)
+        action_file.addSeparator()
         action_file.addAction("Quit", self.quit, QKeySequence.Quit)
         # Edit
         action_edit = menu_bar.addMenu("&Edit")
@@ -82,10 +85,10 @@ class RandomGroupGenerator(QMainWindow):
         groups = Groups()
 
         # Options
-        options = Options(self.editor, groups, generator)
+        self.options = Options(self.editor, groups, generator)
 
         editor_dock = self.addDockWidget(Qt.LeftDockWidgetArea, self.editor)
-        options_dock = self.addDockWidget(Qt.RightDockWidgetArea, options)
+        options_dock = self.addDockWidget(Qt.RightDockWidgetArea, self.options)
         groups_dock = self.addDockWidget(Qt.RightDockWidgetArea, groups)
 
         self.setWindowTitle("Random Group Generator")
@@ -129,6 +132,37 @@ class RandomGroupGenerator(QMainWindow):
         if files:
             self.openFilesPath = files[0]
             self.editor.load_files(files)
+
+    def import_file(self):
+        import_files_path = ''
+
+        # Options for the open dialog
+        options = QFileDialog.Options()
+
+        files, type = QFileDialog.getOpenFileNames(self,
+                "Import File/s", import_files_path,
+                "Comma Seperated Values (*.csv);;Microsoft Excel Spreadsheets (*.xlsx)",
+                options=options)
+
+        if files:
+            self.import_files_path = files[0]
+            self.editor.import_files(files, type)
+
+    def export_file(self):
+        export_files_path = ''
+
+        # Options for the open dialog
+        options = QFileDialog.Options()
+
+        file, file_type = QFileDialog.getSaveFileName(self,
+                "Export Groups", export_files_path,
+                "Comma Seperated Values (*.csv);;Microsoft Excel Spreadsheets (*.xlsx)",
+                options=options)
+
+        if file:
+            self.export_files_path = file
+
+            self.editor.export_file(self.options.groups_list, file, file_type)
 
     def show_about(self):
         about_dialog = AboutDialog()

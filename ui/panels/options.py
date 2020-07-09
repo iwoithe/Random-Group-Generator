@@ -33,7 +33,6 @@ from PyQt5.QtWidgets import (QApplication, QWidget, QDockWidget,
 class Options(QDockWidget):
     def __init__(self, editor, groups, generator):
         super().__init__("Options")
-        self.setFeatures(self.DockWidgetMovable)
 
         self.editor = editor
         self.groups = groups
@@ -77,6 +76,7 @@ class Options(QDockWidget):
 
         # Generate Button
         btn_generate = QPushButton("Generate!")
+        btn_generate.setFixedHeight(36)
         btn_generate.clicked.connect(self.generate_groups)
 
         # Main Layout

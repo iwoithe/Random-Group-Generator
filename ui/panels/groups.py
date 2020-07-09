@@ -31,7 +31,6 @@ from PyQt5.QtWidgets import (QApplication, QWidget, QDockWidget,
 class Groups(QDockWidget):
     def __init__(self):
         super().__init__("Groups")
-        self.setFeatures(self.DockWidgetMovable)
 
         self.setup_ui()
 

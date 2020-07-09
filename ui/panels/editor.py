@@ -42,7 +42,6 @@ class Editor(QDockWidget):
 
     def __init__(self):
         super().__init__("Editor")
-        self.setFeatures(self.DockWidgetMovable)
 
         self.setup_ui()
 

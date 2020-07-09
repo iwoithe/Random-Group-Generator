@@ -24,6 +24,7 @@
 
 import os
 import sys
+import json
 
 import ui.about.about as about
 
@@ -33,13 +34,16 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QKeySequence, QIcon
 from PyQt5.QtWidgets import (QApplication, QMainWindow, QWidget,
                              QHBoxLayout, QMenuBar, QFileDialog,
-                             QStyle)
+                             QTabWidget, QAction)
+
+import ui.utils
 
 from ui.panels.editor import Editor
 from ui.panels.groups import Groups
 from ui.panels.options import Options
 
 from ui.about.about import AboutDialog
+from ui.preferences.preferences import PreferencesDialog
 
 import core.generator as generator
 
@@ -47,11 +51,15 @@ import core.generator as generator
 #       (*) next to the filename
 # TODO: When closing, if a file has been modified, ask if you
 #       want to save the files
-# TODO: Add toggle features to toggle the views of some docks/panes.
-#       Add toggle feature menu inside the view
 # TODO: Use panes (like Atoms) instead of using QDockWidget
 
+
 class RandomGroupGenerator(QMainWindow):
+
+    settings_file = "data/settings.json"
+    with open(settings_file) as f:
+        settings = json.loads(f.read())
+
     def __init__(self):
         super().__init__()
 
@@ -60,9 +68,35 @@ class RandomGroupGenerator(QMainWindow):
         self.import_files_path = ''
         self.export_files_path = ''
 
+        style = ui.utils.load_style_from_file(os.path.join("data/styles/", self.settings["style"] + ".qss"))
+        ui.utils.apply_style(style)
+
         self.setup_ui()
 
     def setup_ui(self):
+        # Editor
+        self.editor = Editor()
+
+        # Groups
+        self.groups = Groups()
+
+        # Options
+        self.options = Options(self.editor, self.groups, generator)
+
+        self.addDockWidget(Qt.LeftDockWidgetArea, self.editor)
+        self.addDockWidget(Qt.RightDockWidgetArea, self.options)
+        self.addDockWidget(Qt.RightDockWidgetArea, self.groups)
+
+        self.setTabPosition(Qt.AllDockWidgetAreas, QTabWidget.North)
+
+        self.setDockOptions(self.AnimatedDocks | self.AllowNestedDocks | self.AllowTabbedDocks | self.GroupedDragging)
+
+        self.setWindowTitle("Random Group Generator")
+        menu_bar = self.create_menu_bar()
+        self.setMenuBar(menu_bar)
+        self.setWindowIcon(QIcon("icon.png"))
+
+    def create_menu_bar(self):
         # Menu Bar
         menu_bar = QMenuBar()
         # File
@@ -77,28 +111,19 @@ class RandomGroupGenerator(QMainWindow):
         action_file.addAction("Quit", self.quit, QKeySequence.Quit)
         # Edit
         action_edit = menu_bar.addMenu("&Edit")
-        action_edit.addAction("Preferences (Coming in Version 0.3.2)")
+        action_edit.addAction("Preferences", self.show_preferences)
+        # View
+        action_view = menu_bar.addMenu("&View")
+        view_panels = action_view.addMenu("Panels")
+        view_panels.addAction(self.editor.toggleViewAction())
+        view_panels.addAction(self.options.toggleViewAction())
+        view_panels.addAction(self.groups.toggleViewAction())
         # Help
         action_help = menu_bar.addMenu("&Help")
         action_help.addAction("About", self.show_about)
         action_help.addAction("About Qt", QApplication.instance().aboutQt)
 
-        # Editor
-        self.editor = Editor()
-
-        # Groups
-        groups = Groups()
-
-        # Options
-        self.options = Options(self.editor, groups, generator)
-
-        editor_dock = self.addDockWidget(Qt.LeftDockWidgetArea, self.editor)
-        options_dock = self.addDockWidget(Qt.RightDockWidgetArea, self.options)
-        groups_dock = self.addDockWidget(Qt.RightDockWidgetArea, groups)
-
-        self.setWindowTitle("Random Group Generator")
-        self.setMenuBar(menu_bar)
-        self.setWindowIcon(QIcon("icon.png"))
+        return menu_bar
 
     def new_file(self):
         self.editor.new_file()
@@ -164,12 +189,17 @@ class RandomGroupGenerator(QMainWindow):
 
             self.editor.export_file(self.options.groups_list, file, file_type)
 
+    def show_preferences(self):
+        preferences_dialog = PreferencesDialog(self)
+        preferences_dialog.exec_()
+
     def show_about(self):
-        about_dialog = AboutDialog()
+        about_dialog = AboutDialog(self)
         about_dialog.exec_()
 
     def quit(self):
         self.destroy()
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

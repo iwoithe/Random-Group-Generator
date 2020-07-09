@@ -33,9 +33,11 @@ from PyQt5.QtWidgets import (QApplication, QDialog, QWidget,
                              QTabWidget, QTextEdit, QLabel,
                              QDialogButtonBox)
 
+
+# TODO: Change the icon/logo to the inverted icon/logo
 class AboutDialog(QDialog):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent=None):
+        super().__init__(parent)
 
         self.setup_ui()
 
@@ -135,8 +137,7 @@ class AboutDialog(QDialog):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     # Temporarily set the style, until I've written my own styles
-    if sys.platform == 'win32':
-        app.setStyle("fusion")
+    app.setStyle("fusion")
     about = AboutDialog()
     about.show()
     sys.exit(app.exec_())

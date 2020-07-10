@@ -168,7 +168,7 @@ class RandomGroupGenerator(QMainWindow):
 
         files, type = QFileDialog.getOpenFileNames(self,
                 "Import File/s", self.import_files_path,
-                "Comma Seperated Values (*.csv);;Microsoft Excel Spreadsheets (*.xlsx)",
+                "Comma Seperated Values (*.csv);;Microsoft Excel Spreadsheets (*.xls *.xlsx)",
                 options=options)
 
         if files:
@@ -181,7 +181,7 @@ class RandomGroupGenerator(QMainWindow):
 
         file, file_type = QFileDialog.getSaveFileName(self,
                 "Export Groups", self.export_files_path,
-                "Comma Seperated Values (*.csv);;Microsoft Excel Spreadsheets (*.xlsx)",
+                "Comma Seperated Values (*.csv);;Microsoft Excel Spreadsheets (*.xls *.xlsx)",
                 options=options)
 
         if file:
@@ -203,7 +203,6 @@ class RandomGroupGenerator(QMainWindow):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    # Temporarily set the style, until I've written my own styles
     app.setStyle("fusion")
     rgg = RandomGroupGenerator()
     rgg.show()

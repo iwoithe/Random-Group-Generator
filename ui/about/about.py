@@ -105,7 +105,8 @@ class AboutDialog(QDialog):
         third_party_libs = '''
         <h2>3rd Party Libraries Used:</h2>
         <ul>
-            <li><a href="https://www.riverbankcomputing.com/software/pyqt/download5">PyQt</a>: GPLv3</li>
+            <li><a href="https://www.riverbankcomputing.com/software/pyqt/download5">PyQt</a> 5.14.1<br>License: GPLv3</li>
+            <li><a href="https://pypi.org/project/openpyxl">openpyxl</a> 3.0.3<br>License: MIT</li>
         </ul>'''
         third_party_text.setHtml(third_party_libs)
 

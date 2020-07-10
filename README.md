@@ -1,4 +1,4 @@
-# Random Group Generator (0.3)
+# Random Group Generator (0.3.2)
 
 A cross-platform, free and open source random group generator.
 
@@ -10,7 +10,9 @@ A cross-platform, free and open source random group generator.
 
 - Random Group Generator allows you to save and open files
 
-- Customisable user interface thanks to [Qt's](https://www.qt.io/) QDockWidget.
+- Customisable user interface with multiple styles to choose from
+
+- Import and export multiple types of files
 
 ## Installing
 
@@ -23,13 +25,13 @@ At this time, Random Group Generator is a source only distribution.
 3. Open a shell (on Windows the Command Prompt or PowerShell) in the top level directory of the extracted Random Group Generator source tree.
 
 4. On Linux and MacOS, run the following command:
-
+   
    ```bash
    pip3 install -r requirements.txt
    ```
-
+   
    On Windows, run the following command:
-
+   
    ```bash
    pip install -r requirements.txt
    ```
@@ -41,13 +43,13 @@ To run Random Group Generator:
 1. Open a shell in the top level directory of Random Group Generator.
 
 2. On Linux and MacOS, run the following command:
-
+   
    ```bash
    python3 -i main.py
    ```
-
+   
    On Windows, run the following command:
-
+   
    ```bash
    python -i main.py
    ```
@@ -67,16 +69,17 @@ For support, please open an issue on GitLab.
 ### Version 0.3
 
 - [x] Change the GUI framework used to PyQt5
-- [x] Make Random Group Generator more customizable (using QDockWidget)
-- [x] Add the ability to import and export files
-- [ ] Create the CSS style sheets
-- [ ] Add preferences
-- [ ] Create a better icon
-- [ ] Create binaries for Linux, MacOS and Windows
+- [x] Make Random Group Generator more customizable
+- [x] Add the ability to import and export files (csv, xls, xlsx)
+- [x] Create some styles
+- [x] Add preferences
+- [ ] Add more options for importing and exporting (ods)
+- [ ] Tools panel including many different name manipulation functions
 
 ### Version 0.4
 
-- [ ] Add a file system tree for quickly open files
+- [ ] Add a file system tree panel for file manipulation
+- [ ] Create more styles 
 
 ## Contributing
 

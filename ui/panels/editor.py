@@ -136,7 +136,7 @@ class Editor(QDockWidget):
 
                 self.new_file(names)
 
-            elif file_type == "Microsoft Excel Spreadsheets (*.xlsx)":
+            elif file_type == "Microsoft Excel Spreadsheets (*.xls *.xlsx)":
                 wb = openpyxl.load_workbook(file)
                 for sheet_name in wb.sheetnames:
                     sheet = wb[sheet_name]
@@ -164,7 +164,7 @@ class Editor(QDockWidget):
                     row = row.split(",")
                     writer.writerow(row)
 
-        elif file_type == "Microsoft Excel Spreadsheets (*.xlsx)":
+        elif file_type == "Microsoft Excel Spreadsheets (*.xls *.xlsx)":
             # Setup the workbook and sheet
             wb = openpyxl.Workbook()
             sheet = wb['Sheet']

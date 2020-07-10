@@ -82,7 +82,7 @@ class PreferencesDialog(QDialog):
         self.setup_ui()
 
         self.setWindowTitle("Preferences")
-        self.setWindowIcon(QIcon(".../../icon.png"))
+        self.setWindowIcon(QIcon("icon.png"))
 
     def setup_ui(self):
         # Settings

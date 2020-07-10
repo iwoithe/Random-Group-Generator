@@ -42,13 +42,13 @@ class AboutDialog(QDialog):
         self.setup_ui()
 
         self.setWindowTitle("About")
-        self.setWindowIcon(QIcon(".../../icon.png"))
+        self.setWindowIcon(QIcon("icon.png"))
         self.resize(600, 400)
 
     def setup_ui(self):
         # Title
         lbl_icon = QLabel()
-        lbl_icon.setPixmap(QPixmap(".../../icon.png"))
+        lbl_icon.setPixmap(QPixmap("icon.png"))
         lbl_icon.setFixedSize(144, 144)
 
         lbl_title = QLabel("<h1>Random Group Generator</h1>")
@@ -65,7 +65,7 @@ class AboutDialog(QDialog):
 
         readme_text = QTextEdit()
         readme_text.setReadOnly(True)
-        with open('.../../README.md') as f:
+        with open('README.md') as f:
             markdown_string = ""
             for line in f:
                 markdown_string += line
@@ -83,7 +83,7 @@ class AboutDialog(QDialog):
 
         licence_text = QTextEdit()
         licence_text.setReadOnly(True)
-        with open('.../../LICENSE') as f:
+        with open('LICENSE') as f:
             text_string = ""
             for line in f:
                 text_string += line
